@@ -8,6 +8,11 @@
 
   <ion-navbar color="primary">
     <ion-title>dishdetail</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="moreButton()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -54,7 +59,7 @@
 		Comments
 	</ion-list-header>
 	<ion-item *ngFor="let comment of dish.comments" text-wrap>
-		<h4>{{comment.comment}}</h4>
+		<h4 style="margin-top: 0px;">{{comment.comment}}</h4>
 		<p>{{comment.rating}} Stars</p>
 		<p>
 			<span> -- {{comment.author}} {{comment.date | date}}</span>

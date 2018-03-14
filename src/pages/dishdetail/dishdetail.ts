@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController,
+  ActionSheetController, ModalController } from 'ionic-angular';
 import { Dish } from '../../shared/dish';
 import { Comment } from '../../shared/comment';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
+import { CommentPage } from '../../pages/comment/comment';
 
 /**
  * Generated class for the DishdetailPage page.
@@ -26,7 +28,9 @@ export class DishdetailPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
   	@Inject('BaseURL') private BaseURL,
     private favoriteservice: FavoriteProvider,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private actionSheetCtrl: ActionSheetController,
+    public modalCtrl: ModalController) {
   	this.dish = navParams.get('dish');
     this.favorite = favoriteservice.isFavorite(this.dish.id);
   	this.numcomments = this.dish.comments.length;
@@ -47,6 +51,44 @@ export class DishdetailPage {
       position: 'middle',
       duration: 3000
     }).present();
+  }
+
+  openModal() {
+    let commentModal = this.modalCtrl.create(CommentPage);
+    commentModal.onDidDismiss(
+        commentData => {
+          this.dish.comments.push(commentData);
+          console.log(this.dish);
+        }
+      );
+    commentModal.present();
+  }
+
+  moreButton() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Actions',
+      buttons: [
+      {
+        text: 'Cancel',
+        role:'cancel',
+        handler: () => {
+          console.log('ActionSheet Cancelled');
+        }
+      },{
+        text: 'Add to Favorites',
+        handler: () => {
+          this.addToFavorites();
+        }
+      },{
+        text: 'Add Comment',
+        handler: () => {
+          this.openModal();
+        }
+      }
+      ]
+    });
+
+    actionSheet.present();
   }
 
 }
