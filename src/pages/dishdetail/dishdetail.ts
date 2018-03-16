@@ -58,7 +58,7 @@ export class DishdetailPage {
     commentModal.onDidDismiss(
         commentData => {
           this.dish.comments.push(commentData);
-          console.log(this.dish);
+          // console.log(this.dish);
         }
       );
     commentModal.present();
