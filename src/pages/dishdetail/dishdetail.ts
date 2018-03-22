@@ -57,14 +57,16 @@ export class DishdetailPage {
     let commentModal = this.modalCtrl.create(CommentPage);
     commentModal.onDidDismiss(
         commentData => {
-          this.dish.comments.push(commentData);
-          console.log(this.dish);
+          if (commentData){
+            this.dish.comments.push(commentData);
+            // console.log(this.dish);
+          }
         }
       );
     commentModal.present();
   }
 
-  moreButton() {
+  createActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Select Actions',
       buttons: [
