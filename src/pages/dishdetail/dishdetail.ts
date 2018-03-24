@@ -59,6 +59,7 @@ export class DishdetailPage {
 
   openModal() {
     let commentModal = this.modalCtrl.create(CommentPage);
+    commentModal.present();
     commentModal.onDidDismiss(
         commentData => {
           if (commentData){
@@ -67,7 +68,6 @@ export class DishdetailPage {
           }
         }
       );
-    commentModal.present();
   }
 
   presentActionSheet() {
