@@ -59,13 +59,33 @@ export class RegisterPage {
   		cameraDirection: this.camera.Direction.FRONT
   	}
   	// open camera for getting the picture 
-  	this.camera.getPicture(options).then(
-  		(imageData) => {
+  	this.camera.getPicture(options).then((imageData) => {
   			this.image = imageData;
-	  		console.log(ImageData);
-	  	},
-  		(err) => {console.log('Error obtaining picture');
+	  		console.log(imageData);
+	  	},(err) => {
+        console.log('Error obtaining picture');
   		});
+  }
+
+  getFromLibrary() {
+    const options: CameraOptions ={
+      quality: 100,
+      // targetHeight: 100,
+      // targetWidth: 100,
+      correctOrientation:true,
+      allowEdit: true,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    // open camera for getting the picture 
+    this.camera.getPicture(options).then((imageData) => {
+      this.image = imageData;
+      console.log(imageData);
+    },(err) => {
+      console.log('Error obtaining picture');
+    });
   }
 
   onSubmit() {
